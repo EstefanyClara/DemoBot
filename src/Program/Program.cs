@@ -20,6 +20,10 @@ namespace Telegram.Bot.Examples.Echo
 
         /// <summary>
         /// El token provisto por Telegram al crear el bot.
+        ///
+        /// *Importante*:
+        /// Para probar este ejemplo, crea un bot nuevo y eeemplaza este 
+        /// token por el de tu bot.
         /// </summary>
         private static string Token = "1140560003:AAH4lgSPBYy5EWNJ0i2hpypjLJ1ySb2yy5U";
 
