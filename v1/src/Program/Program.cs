@@ -11,6 +11,9 @@ using Telegram.Bot.Types.InputFiles;
 
 namespace Telegram.Bot.Examples.Echo
 {
+    /// <summary>
+    /// Un programa que implementa un bot de Telegram.
+    /// </summary>
     public static class Program
     {
         /// <summary>
@@ -20,28 +23,28 @@ namespace Telegram.Bot.Examples.Echo
 
         /// <summary>
         /// El token provisto por Telegram al crear el bot.
-        ///
         /// *Importante*:
-        /// Para probar este ejemplo, crea un bot nuevo y eeemplaza este 
-        /// token por el de tu bot.
+        /// Para probar este ejemplo, crea un bot nuevo y reemplaza este token por el de tu bot.
         /// </summary>
-        private static string Token = "1140560003:AAH4lgSPBYy5EWNJ0i2hpypjLJ1ySb2yy5U";
+        private static string Token = "<token>";
 
         /// <summary>
-        /// Punto de entrada.
+        /// Punto de entrada al programa.
         /// </summary>
         public static void Main()
         {
             Bot = new TelegramBotClient(Token);
             var cts = new CancellationTokenSource();
 
-            // Comenzamos a escuchar mensajes. Esto se hace en otro hilo (en _background_).
+            // Comenzamos a escuchar mensajes. Esto se hace en otro hilo (en background). El primer método
+            // HandleUpdateAsync es invocado por el bot cuando se recibe un mensaje. El segundo método HandleErrorAsync
+            // es invocado cuando ocurre un error.
             Bot.StartReceiving(
                 new DefaultUpdateHandler(HandleUpdateAsync, HandleErrorAsync),
                 cts.Token
             );
 
-            Console.WriteLine($"Bot is Up!");
+            Console.WriteLine($"Bot is up!");
 
             // Esperamos a que el usuario aprete Enter en la consola para terminar el bot.
             Console.ReadLine();
@@ -51,18 +54,14 @@ namespace Telegram.Bot.Examples.Echo
         }
 
         /// <summary>
-        /// Maneja las actualizaciones del bot (todo lo que llega), incluyendo
-        /// mensajes, ediciones de mensajes, respuestas a botones, etc. En este
-        /// ejemplo sólo manejamos mensajes de texto.
+        /// Maneja las actualizaciones del bot (todo lo que llega), incluyendo mensajes, ediciones de mensajes,
+        /// respuestas a botones, etc. En este ejemplo sólo manejamos mensajes de texto.
         /// </summary>
-        /// <param name="update"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public static async Task HandleUpdateAsync(Update update, CancellationToken cancellationToken)
         {
-            try 
+            try
             {
-                // sólo respondemos a mensajes de texto
+                // Sólo respondemos a mensajes de texto
                 if (update.Type == UpdateType.Message)
                 {
                     await HandleMessageReceived(update.Message);
@@ -86,40 +85,36 @@ namespace Telegram.Bot.Examples.Echo
         private static async Task HandleMessageReceived(Message message)
         {
             Console.WriteLine($"Received a message from {message.From.FirstName} saying: {message.Text}");
-            
+
             string response;
 
-            switch(message.Text.ToLower())
+            switch(message.Text.ToLower().Trim())
             {
-                case "hola": 
-                    response = "hola! como estás?";
+                case "hola":
+                    response = "¡Hola! ¿Cómo estás?";
                     break;
 
-                case "chau": 
-                    response = "Chau! Que andes bien!";
+                case "chau":
+                    response = "¡Chau! ¡Qué andes bien!";
                     break;
 
                 case "foto":
-                    // si nos piden una foto, mandamos la foto en vez de responder
-                    // con un mensaje de texto.
+                    // Si nos piden una foto, mandamos la foto en vez de responder con un mensaje de texto.
                     await SendProfileImage(message);
                     return;
 
-                default: 
-                    response = "Disculpa, no se qué hacer con ese mensaje!";
+                default:
+                    response = "Disculpa, ¡no se qué hacer con ese mensaje!";
                     break;
             }
 
-            // enviamos el texto de respuesta
+            // Enviamos el texto de respuesta
             await Bot.SendTextMessageAsync(message.Chat.Id, response);
         }
 
         /// <summary>
-        /// Envía una imágen como respuesta al mensaje recibido.
-        /// Como ejemplo enviamos siempre la misma foto.
+        /// Envía una imagen como respuesta al mensaje recibido. Como ejemplo enviamos siempre la misma foto.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
         static async Task SendProfileImage(Message message)
         {
             await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.UploadPhoto);
@@ -135,17 +130,12 @@ namespace Telegram.Bot.Examples.Echo
         }
 
         /// <summary>
-        /// Manejo de excepciones. 
-        /// Por ahora simplemente la imprimimos en la consola.
+        /// Manejo de excepciones. Por ahora simplemente la imprimimos en la consola.
         /// </summary>
-        /// <param name="exception"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public static Task HandleErrorAsync(Exception exception, CancellationToken cancellationToken)
         {
             Console.WriteLine(exception.Message);
             return Task.CompletedTask;
         }
-
     }
 }
