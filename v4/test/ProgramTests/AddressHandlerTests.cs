@@ -12,7 +12,6 @@ namespace ProgramTests
         {
             public bool Found { get; set; }
             public double Latitude { get; }
-
             public double Longitude { get; }
         }
 

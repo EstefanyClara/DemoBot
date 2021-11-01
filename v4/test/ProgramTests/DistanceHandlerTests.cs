@@ -32,8 +32,7 @@ namespace ProgramTests
             // predeterminados y que ambas existen; en caso contrario retorna cuál no existe.
             public IDistanceResult CalculateDistance(string fromAddress, string toAddress)
             {
-                return new TestDistanceResult(fromAddress.Equals("from"), toAddress.Equals("to"), 10.0, 50.0
-                );
+                return new TestDistanceResult(fromAddress.Equals("from"), toAddress.Equals("to"), 10.0, 50.0);
             }
         }
 

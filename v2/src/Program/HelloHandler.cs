@@ -24,7 +24,7 @@ namespace Ucu.Poo.TelegramBot
         /// <returns>true si el mensaje fue procesado; false en caso contrario.</returns>
         protected override bool InternalHandle(Message message, out string response)
         {
-            if (message.Text.ToLower().Equals("hola"))
+            if (this.CanHandle(message))
             {
                 response = "¡Hola! ¿Cómo estás?";
                 return true;

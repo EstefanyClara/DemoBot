@@ -17,7 +17,7 @@ namespace Ucu.Poo.TelegramBot
         /// Obtiene el próximo "handler".
         /// </summary>
         /// <value>El "handler" que será invocado si este "handler" no procesa el mensaje.</value>
-        public BaseHandler Next { get; set; }
+        public IHandler Next { get; set; }
 
         /// <summary>
         /// Obtiene o asigna el conjunto de palabras clave que este "handler" puede procesar.
@@ -29,7 +29,7 @@ namespace Ucu.Poo.TelegramBot
         /// Inicializa una nueva instancia de la clase <see cref="BaseHandler"/>.
         /// </summary>
         /// <param name="next">El próximo "handler".</param>
-        public BaseHandler(BaseHandler next)
+        public BaseHandler(IHandler next)
         {
             this.Next = next;
         }
@@ -52,10 +52,10 @@ namespace Ucu.Poo.TelegramBot
         /// <param name="message">El mensaje a procesar.</param>
         /// <param name="response">La respuesta al mensaje procesado.</param>
         /// <returns>true si el mensaje fue procesado; false en caso contrario</returns>
-        protected virtual bool InternalHandle(Message message, out string responder)
-        {
-            throw new InvalidOperationException("Este método debe ser sobrescrito");
-        }
+        protected abstract bool InternalHandle(Message message, out string responder);
+        // {
+        //     throw new InvalidOperationException("Este método debe ser sobrescrito");
+        // }
 
         /// <summary>
         /// Este método puede ser sobreescrito en las clases sucesores que procesan varios mensajes cambiando de estado

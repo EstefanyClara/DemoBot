@@ -17,7 +17,7 @@ namespace Ucu.Poo.TelegramBot
         /// Obtiene el próximo "handler".
         /// </summary>
         /// <value>El "handler" que será invocado si este "handler" no procesa el mensaje.</value>
-        public BaseHandler Next { get; set; }
+        public IHandler Next { get; set; }
 
         /// <summary>
         /// Obtiene o asigna el conjunto de palabras clave que este "handler" puede procesar.
@@ -29,7 +29,7 @@ namespace Ucu.Poo.TelegramBot
         /// Inicializa una nueva instancia de la clase <see cref="BaseHandler"/>.
         /// </summary>
         /// <param name="next">El próximo "handler".</param>
-        public BaseHandler(BaseHandler next)
+        public BaseHandler(IHandler next)
         {
             this.Next = next;
         }
