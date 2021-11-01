@@ -1,4 +1,4 @@
-using Ucu.Poo.LocationApi.Client;
+using Ucu.Poo.Locations.Client;
 using Nito.AsyncEx;
 
 namespace Ucu.Poo.TelegramBot

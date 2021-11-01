@@ -1,6 +1,6 @@
 using System;
 using Telegram.Bot.Types;
-using Ucu.Poo.LocationApi.Client;
+using Ucu.Poo.Locations.Client;
 
 namespace Ucu.Poo.TelegramBot
 {
