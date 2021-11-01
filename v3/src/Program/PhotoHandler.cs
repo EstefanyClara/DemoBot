@@ -1,17 +1,18 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
 using Nito.AsyncEx;
 
-namespace Telegram.Bot.Examples.Echo
+namespace Ucu.Poo.TelegramBot
 {
     /// <summary>
     /// Un "handler" del patrón Chain of Responsibility que implementa el comando "foto".
     /// </summary>
-    public class PhotoHandler : Handler
+    public class PhotoHandler : BaseHandler
     {
         private TelegramBotClient bot;
 
@@ -20,7 +21,8 @@ namespace Telegram.Bot.Examples.Echo
         /// </summary>
         /// <param name="next">El próximo "handler".</param>
         /// <param name="bot">El bot para enviar la foto.</param>
-        public PhotoHandler(TelegramBotClient bot, Handler next) : base(next)
+        public PhotoHandler(TelegramBotClient bot, BaseHandler next)
+            : base(new string[] { "foto" }, next)
         {
             this.bot = bot;
         }
@@ -33,7 +35,7 @@ namespace Telegram.Bot.Examples.Echo
         /// <returns>true si el mensaje fue procesado; false en caso contrario.</returns>
         protected override bool InternalHandle(Message message, out string response)
         {
-            if (message.Text.ToLower().Equals("foto"))
+            if (this.CanHandle(message))
             {
                 // await SendProfileImage(message);
                 AsyncContext.Run(() => SendProfileImage(message));
@@ -51,16 +53,21 @@ namespace Telegram.Bot.Examples.Echo
         /// </summary>
         private async Task SendProfileImage(Message message)
         {
-            await bot.SendChatActionAsync(message.Chat.Id, ChatAction.UploadPhoto);
+            // Can be null during testing
+            if (bot != null)
+            {
+                await bot.SendChatActionAsync(message.Chat.Id, ChatAction.UploadPhoto);
 
-            const string filePath = @"profile.jpeg";
-            using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            var fileName = filePath.Split(Path.DirectorySeparatorChar).Last();
-            await bot.SendPhotoAsync(
-                chatId: message.Chat.Id,
-                photo: new InputOnlineFile(fileStream, fileName),
-                caption: "Te ves bien!"
-            );
+                const string filePath = @"profile.jpeg";
+                using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                var fileName = filePath.Split(Path.DirectorySeparatorChar).Last();
+
+                await bot.SendPhotoAsync(
+                    chatId: message.Chat.Id,
+                    photo: new InputOnlineFile(fileStream, fileName),
+                    caption: "Te ves bien!"
+                );
+            }
         }
     }
 }

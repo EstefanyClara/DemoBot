@@ -1,5 +1,6 @@
 using System;
 using Telegram.Bot.Types;
+using Ucu.Poo.LocationApi.Client;
 
 namespace Ucu.Poo.TelegramBot
 {
@@ -14,11 +15,14 @@ namespace Ucu.Poo.TelegramBot
         /// </summary>
         public static void Main()
         {
+            LocationApiClient client = new LocationApiClient();
             IHandler handler =
                 new HelloHandler(
                 new GoodByeHandler(
-                new PhotoHandler(null, null)
-            ));
+                new PhotoHandler(null,
+                new AddressHandler(new AddressFinder(client),
+                new DistanceHandler(new DistanceCalculator(client), null)
+            ))));
             Message message = new Message();
             string response;
 

@@ -1,19 +1,20 @@
 using Telegram.Bot.Types;
 
-namespace Telegram.Bot.Examples.Echo
+namespace Ucu.Poo.TelegramBot
 {
     /// <summary>
     /// Un "handler" del patrón Chain of Responsibility que implementa el comando "chau".
     /// </summary>
-    public class GoodByeHandler : Handler
+    public class GoodByeHandler : BaseHandler
     {
         /// <summary>
-        /// Inicializa una nueva instancia de la clase <see cref="GoodByeHandler"/>. Esta clase procesa el mensaje "chau".
+        /// Inicializa una nueva instancia de la clase <see cref="GoodByeHandler"/>. Esta clase procesa el mensaje "chau"
+        /// y el mensaje "adiós" -un ejemplo de cómo un "handler" puede procesar comandos con sinónimos.
         /// </summary>
         /// <param name="next">El próximo "handler".</param>
-        public GoodByeHandler(Handler next) : base(next)
+        public GoodByeHandler(BaseHandler next) : base(next)
         {
-            // Intencionalmente en blanco
+            this.Keywords = new string[] { "chau", "adiós" };
         }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace Telegram.Bot.Examples.Echo
         /// <returns>true si el mensaje fue procesado; false en caso contrario.</returns>
         protected override bool InternalHandle(Message message, out string response)
         {
-            if (message.Text.ToLower().Equals("chau"))
+            if (this.CanHandle(message))
             {
                 response = "¡Chau! ¡Qué andes bien!";
                 return true;

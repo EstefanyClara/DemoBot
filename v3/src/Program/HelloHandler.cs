@@ -1,19 +1,19 @@
 using Telegram.Bot.Types;
 
-namespace Telegram.Bot.Examples.Echo
+namespace Ucu.Poo.TelegramBot
 {
     /// <summary>
     /// Un "handler" del patrón Chain of Responsibility que implementa el comando "hola".
     /// </summary>
-    public class HelloHandler : Handler
+    public class HelloHandler : BaseHandler
     {
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="HelloHandler"/>. Esta clase procesa el mensaje "hola".
         /// </summary>
         /// <param name="next">El próximo "handler".</param>
-        public HelloHandler(Handler next) : base(next)
+        public HelloHandler(BaseHandler next) : base(next)
         {
-            // Intencionalmente en blanco
+            this.Keywords = new string[] {"hola"};
         }
 
         /// <summary>

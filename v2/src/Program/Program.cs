@@ -1,34 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot.Extensions.Polling;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.InputFiles;
 
-namespace Telegram.Bot.Examples.Echo
+namespace Ucu.Poo.TelegramBot
 {
     /// <summary>
     /// Un programa que implementa un bot de Telegram.
     /// </summary>
     public static class Program
     {
-        /// <summary>
-        /// La instancia del bot.
-        /// </summary>
+        // La instancia del bot.
         private static TelegramBotClient Bot;
 
-        /// <summary>
-        /// El token provisto por Telegram al crear el bot.
-        ///
-        /// *Importante*:
-        /// Para probar este ejemplo, crea un bot nuevo y eeemplaza este token por el de tu bot.
-        /// </summary>
-        private static string Token = "<token>";
+        // El token provisto por Telegram al crear el bot.
+        //
+        // *Importante*:
+        // Para probar este ejemplo, crea un bot nuevo y eeemplaza este token por el de tu bot.
+        private static string Token = "";
 
         private static IHandler firstHandler;
 
@@ -42,11 +34,8 @@ namespace Telegram.Bot.Examples.Echo
             firstHandler =
                 new HelloHandler(
                 new GoodByeHandler(
-                new PhotoHandler(Bot,
-                new EndOfChainHandler(null)
-            )));
-
-
+                new PhotoHandler(Bot, null)
+            ));
 
             var cts = new CancellationTokenSource();
 

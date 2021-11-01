@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
 
-namespace Telegram.Bot.Examples.Echo
+namespace Ucu.Poo.TelegramBot
 {
     /// <summary>
     /// Un programa que implementa un bot de Telegram.
@@ -26,7 +26,7 @@ namespace Telegram.Bot.Examples.Echo
         /// *Importante*:
         /// Para probar este ejemplo, crea un bot nuevo y reemplaza este token por el de tu bot.
         /// </summary>
-        private static string Token = "<token>";
+        private static string Token = "";
 
         /// <summary>
         /// Punto de entrada al programa.

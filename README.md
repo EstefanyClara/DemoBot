@@ -22,4 +22,13 @@ Para probarlo, clona este repo y crea un nuevo bot en Telegram. Luego, modifica 
 
 ### v3
 
-Ídem v2 pero sin usar un bot, es decir, prueba los comandos mediante casos de prueba.
+Ídem v2 pero sin usar un bot, es decir, prueba los comandos mediante casos de prueba. También es posible probar los comandos de forma interactiva por la consola, emulando un bot.
+
+### v4
+
+Ídem v3 agregando comandos que piden uno o dos datos antes de ejecutar vía _prompts_:
+
+- "Dirección"
+- "Distancia"
+
+ Estos comandos tienen estado y datos capturados durante la ejecución. Estos nuevos comandos también son probados mediante casos de prueba o de forma interactiva en la consola.
